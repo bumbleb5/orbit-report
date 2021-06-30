@@ -4,4 +4,5 @@
     <button class="searchButton" (click)="search(searchTerm.value)">Search</button>
     <button class="resetButton" (click)="displayList = sourceList; searchTerm.value=''">Reset</button>
 </div>
+
 <app-orbit-counts [satellites]="displayList"></app-orbit-counts>

@@ -43,17 +43,32 @@ export class AppComponent {
     }
 
     search(searchTerm: string): void {
+        
         let matchingSatellites: Satellite[] = [];
         searchTerm = searchTerm.toLowerCase();
-        // console.log(`Search Term: ${searchTerm}`);
-        for (let i = 0; i < this.sourceList.length; i++) {
-            let name = this.sourceList[i].name.toLowerCase();
-            if (name.indexOf(searchTerm) !== -1) {
-                matchingSatellites.push(this.sourceList[i]);
+        let types: string[] = ['space debris', 'communication', 'probe', 'positioning', 'space station'];
+
+        if (types.includes(searchTerm)) {
+            for (let i = 0; i < this.sourceList.length; i++) {
+                let type = this.sourceList[i].type.toLowerCase();
+                if (type.indexOf(searchTerm) !== -1) {
+                    matchingSatellites.push(this.sourceList[i]);
+                }
+            }
+        } else {
+            for (let i = 0; i < this.sourceList.length; i++) {
+                let name = this.sourceList[i].name.toLowerCase();
+                if (name.indexOf(searchTerm) !== -1) {
+                    matchingSatellites.push(this.sourceList[i]);
+                }
             }
         }
-        // console.log(`Matching satellites: ${matchingSatellites}`);
-        this.displayList = matchingSatellites;
+
+        if (matchingSatellites.length === 0) {
+            alert(searchTerm + ' did not match any satellites.');
+        } else {
+            this.displayList = matchingSatellites;
+        }        
     }
 
 }

@@ -8,25 +8,53 @@ import { Satellite } from '../satellite';
 })
 export class OrbitListComponent implements OnInit {
 
+    nameSorted: boolean;
+    typeSorted: boolean;
+
     @Input()
     satellites: Satellite[] = [];
 
-    constructor() { }
+    constructor() { 
+        this.nameSorted = false;
+        this.typeSorted = false;
+    }
 
     ngOnInit(): void {
     }
 
-
-    // TODO sort reverse if clicked again?
     sort(column: keyof Satellite): void {
-        this.satellites.sort((a: Satellite, b: Satellite): number => {
-            if (a[column] < b[column]) {
-                return -1;
-            } else if (a[column] > b[column]) {
-                return 1;
+
+        if (column === "name") {
+            if (this.nameSorted) {
+                this.satellites.reverse();
+            } else {
+                this.satellites.sort((a: Satellite, b: Satellite): number => {
+                    if (a[column] < b[column]) {
+                        return -1;
+                    } else if (a[column] > b[column]) {
+                        return 1;
+                    }
+                    return 0;
+                });
+                this.nameSorted = true;
+                this.typeSorted = false;
             }
-            return 0;
-        });
+        } else if (column === "type") {
+            if (this.typeSorted) {
+                this.satellites.reverse();
+            } else {
+                this.satellites.sort((a: Satellite, b: Satellite): number => {
+                    if (a[column] < b[column]) {
+                        return -1;
+                    } else if (a[column] > b[column]) {
+                        return 1;
+                    }
+                    return 0;
+                });
+                this.typeSorted = true;
+                this.nameSorted = false;
+            }
+        }
     }
 
 }
